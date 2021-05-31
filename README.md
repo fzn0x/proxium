@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://github.com/fauzan121002/proxium/blob/master/dist/proxium.gif"></img>
+    <img src="https://github.com/fauzan121002/proxium/blob/master/proxium.gif"></img>
 </p>
 
 <p align="center">
