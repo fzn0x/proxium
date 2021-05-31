@@ -1,0 +1,22 @@
+{
+  "name": "proxium",
+  "version": "0.1.0",
+  "description": "Proxy-Based State Management with Functional Programming Approach.",
+  "main": "src/Proxium.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "Proxy-based",
+    "State Management",
+    "Functional Programming"
+  ],
+  "author": "fauzan121002",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^8.4.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
