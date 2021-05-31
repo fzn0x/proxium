@@ -19,7 +19,7 @@ module.exports = (options) => {
 
   _proxium.deliver = async (doing, payload) => {
     if (typeof _proxium.doings[doing] !== "function") {
-      console.error(`Action "${doing} doesn't exist!`);
+      console.error(`Action "${doing}" doesn't exist!`);
     }
 
     _proxium.activity = "deliver";
