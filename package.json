@@ -1,6 +1,6 @@
 {
   "name": "proxium",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Proxy-Based State Management with Functional Programming Approach.",
   "main": "src/Proxium.js",
   "scripts": {
