@@ -12,7 +12,12 @@ module.exports = (options) => {
   });
 
   /**
+   * MDN: Proxy object enables you to create a proxy for another object,
+   * which can intercept and redefine fundamental operations for that object.
    *
+   * this is built in proxy to set `set` trap , so we can modify the existing
+   * value inside the object or track any changes , in Proxium this is very
+   * useful and one of the important aspect inside the core concept.
    */
   _proxium.state = new Proxy(options.state || {}, {
     set: function (state, key, value) {
