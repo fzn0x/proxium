@@ -20,10 +20,10 @@ const store = Store({
       await deliver("asyncHello", {
         text: "Hello World",
       });
-      does("increment");
-      does("increment");
-      does("increment");
       deliver("hello");
+      does("increment");
+      does("increment");
+      does("increment");
     },
     async asyncHello({ state }, { text }) {
       console.log(text);
@@ -31,8 +31,10 @@ const store = Store({
         .then((response) => response.json())
         .then((json) => console.log(json.title));
     },
-    hello({ state }) {
-      console.log(state.text);
+    hello({ state, onChange }) {
+      onChange(state, () => {
+        console.log("State Changed");
+      });
     },
   },
 });

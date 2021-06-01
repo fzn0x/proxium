@@ -1,3 +1,6 @@
+const EventEmitter = require("events");
+const events = new EventEmitter();
+
 module.exports = (options) => {
   const _proxium = this;
 
@@ -8,10 +11,17 @@ module.exports = (options) => {
     activity: "break",
   });
 
+  _proxium.onChange = (data, callback) => {
+    events.on("change", () => {
+      callback(data);
+    });
+  };
+
   _proxium.state = new Proxy(options.state || {}, {
     set: function (state, key, value) {
       if (_proxium.activity === "settled") {
         state[key] = value;
+        events.emit("change");
       }
       _proxium.activity = "break";
     },
@@ -53,6 +63,7 @@ module.exports = (options) => {
   // COMING SOON!!
   _proxium.vue = () => {};
   _proxium.react = () => {};
+  _proxium.useState = () => {};
 
   return _proxium;
 };
