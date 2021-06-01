@@ -11,12 +11,6 @@ module.exports = (options) => {
     activity: "break",
   });
 
-  _proxium.onChange = (data, callback) => {
-    events.on("change", () => {
-      callback(data);
-    });
-  };
-
   _proxium.state = new Proxy(options.state || {}, {
     set: function (state, key, value) {
       if (_proxium.activity === "settled") {
@@ -26,6 +20,12 @@ module.exports = (options) => {
       _proxium.activity = "break";
     },
   });
+
+  _proxium.onChange = (data, callback) => {
+    events.on("change", () => {
+      callback(data);
+    });
+  };
 
   _proxium.deliver = async (doing, payload) => {
     if (typeof _proxium.doings[doing] !== "function") {
