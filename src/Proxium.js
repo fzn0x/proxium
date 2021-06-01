@@ -11,6 +11,9 @@ module.exports = (options) => {
     activity: "break",
   });
 
+  /**
+   *
+   */
   _proxium.state = new Proxy(options.state || {}, {
     set: function (state, key, value) {
       if (_proxium.activity === "settled") {
@@ -21,12 +24,22 @@ module.exports = (options) => {
     },
   });
 
+  /**
+   * capture any changes inside state
+   * @param  {any} data
+   * @param  {function} callback
+   */
   _proxium.onChange = (data, callback) => {
     events.on("change", () => {
       callback(data);
     });
   };
 
+  /**
+   * deliver any doings
+   * @param  {string} doing
+   * @param  {any} payload
+   */
   _proxium.deliver = async (doing, payload) => {
     if (typeof _proxium.doings[doing] !== "function") {
       console.error(`Action "${doing}" doesn't exist!`);
@@ -41,6 +54,10 @@ module.exports = (options) => {
       : action(_proxium, payload);
   };
 
+  /**
+   * do any events
+   * @param  {string} event
+   */
   _proxium.does = (event) => {
     if (typeof _proxium.events[event] !== "function") {
       console.error(`Mutation "${event}" doesn't exist!`);
@@ -53,6 +70,10 @@ module.exports = (options) => {
     _proxium.state = Object.assign(_proxium.state, newState);
   };
 
+  /**
+   * check if action is async
+   * @param  {function} definedFunction
+   */
   _proxium.isAsync = (definedFunction) => {
     if (typeof definedFunction !== "function") {
       return false;
