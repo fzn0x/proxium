@@ -16,18 +16,42 @@ module.exports = (options) => {
    * which can intercept and redefine fundamental operations for that object.
    *
    * this is built in proxy to set `set` trap , so we can modify the existing
-   * value inside the object or track any changes , in Proxium this is very
-   * useful and one of the important aspect inside the core concept.
+   * value inside the object or track any changes and set `get` trap , so we
+   * can capture any use of state event , in Proxium this is very useful and
+   * one of the important aspect inside the core concept.
    */
   _proxium.state = new Proxy(options.state || {}, {
-    set: function (state, key, value) {
+    set: function (state, prop, value) {
       if (_proxium.activity === "settled") {
-        state[key] = value;
+        state[prop] = value;
         events.emit("change");
       }
       _proxium.activity = "break";
     },
+    get: function (state, prop, value) {
+      events.emit("use");
+      return state[prop];
+    },
   });
+
+  /**
+   * use existing state
+   * @param  {function} callback
+   */
+  _proxium.useState = (callback) => {
+    callback(_proxium.state);
+  };
+
+  /**
+   * capture any use of state
+   * @param  {any} data
+   * @param  {function} callback
+   */
+  _proxium.onUse = (data, callback) => {
+    events.on("use", () => {
+      callback(data);
+    });
+  };
 
   /**
    * capture any changes inside state
@@ -89,7 +113,6 @@ module.exports = (options) => {
   // COMING SOON!!
   _proxium.vue = () => {};
   _proxium.react = () => {};
-  _proxium.useState = () => {};
 
   return _proxium;
 };

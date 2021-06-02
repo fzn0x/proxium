@@ -31,9 +31,17 @@ const store = Store({
         .then((response) => response.json())
         .then((json) => console.log(json.title));
     },
-    hello({ state, onChange }) {
-      onChange(state, () => {
+    hello({ state, onChange, onUse }) {
+      onChange({}, () => {
         console.log("State Changed");
+
+        store.useState((state) => {
+          console.log(`\r
+            \r<div>
+              \r${state.number}
+            \r</div>
+          \r`);
+        });
       });
     },
   },
